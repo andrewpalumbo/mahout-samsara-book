@@ -1,0 +1,14 @@
+.classpath
+.project
+.idea/*
+*.iml
+myMahoutApp/target/*
+myMahoutApp/.idea*
+myMahoutApp/*.iml
+naiveBayesExample/target/*
+naiveBayesExample/.idea*
+naiveBayesExample/tomca*
+naiveBayesExample/*.iml
+.settings/
+foo
+
