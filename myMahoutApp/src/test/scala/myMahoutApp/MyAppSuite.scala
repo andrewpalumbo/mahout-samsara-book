@@ -27,6 +27,7 @@ class MyAppSuite extends FunSuite with DistributedSparkSuite with Matchers {
 
   def simData(beta: Vector, m: Int, noiseSigma: Double = 0.04) = {
     val n = beta.length
+    val rnd = new Random(1245)
     val mxData =
       Matrices.symmetricUniformView(m, n, 1234) cloned
 
@@ -36,7 +37,7 @@ class MyAppSuite extends FunSuite with DistributedSparkSuite with Matchers {
 
     // Perturb y with a little noise for
     // things to be not so perfect.
-    y := { v ⇒ v + noiseSigma * Random.nextGaussian() }
+    y := { v ⇒ v + noiseSigma * rnd.nextGaussian() }
 
     // Return simulated X and y.
     mxData(::, 1 until n) → y
@@ -82,7 +83,7 @@ class MyAppSuite extends FunSuite with DistributedSparkSuite with Matchers {
     val drmX = drmParallelize(mxX, numPartitions = 2)
     val fittedBeta = dridge(drmX, y, 0)
     trace(s"beta = $fittedBeta.")
-    (betaSim - fittedBeta).norm(1) should be < 1e-2
+    (betaSim - fittedBeta).norm(1) should be < 1e-1
   }
 
   test("ols-coeff-tests") {
